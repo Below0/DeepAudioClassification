@@ -6,10 +6,13 @@ Read the [article on Medium](https://medium.com/@juliendespois/finding-the-genre
 Required install:
 
 ```
-eyed3
-sox --with-lame
-tensorflow
-tflearn
+pip install eyed3
+pip install tensorflow
+pip install tflearn
+```
+```
+sudo apt install sox
+sudo apt-get install libsox-fmt-mp3
 ```
 
 - Create folder Data/Raw/
