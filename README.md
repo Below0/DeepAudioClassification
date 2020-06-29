@@ -1,6 +1,10 @@
 # Deep Audio Classification
 A pipeline to build a dataset from your own music library and use it to fill the missing genres
 
+**Edited by Below0**
++ fixed python version error(python 2.x -> python 3.x)
++ add mp3 format handler for sox
+
 Read the [article on Medium](https://medium.com/@juliendespois/finding-the-genre-of-a-song-with-deep-learning-da8f59a61194#.yhemoyql0)
 
 Required install:
