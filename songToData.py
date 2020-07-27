@@ -23,9 +23,12 @@ eyed3.log.setLevel("ERROR")
 def createSpectrogram(filename,newFilename):
 	#Create temporary mono track if needed
 	if isMono(rawDataPath+filename):
+		print('mono')
 		command = "cp '{}' '/tmp/{}.mp3'".format(rawDataPath+filename,newFilename)
+		print(command)
 	else:
 		command = "sox '{}' '/tmp/{}.mp3' remix 1,2".format(rawDataPath+filename,newFilename)
+		print(command)
 	p = Popen(command, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True, cwd=currentPath)
 	output, errors = p.communicate()
 	if errors:
@@ -40,8 +43,10 @@ def createSpectrogram(filename,newFilename):
 		print(errors)
 
 	#Remove tmp mono track
-	os.remove("/tmp/{}.mp3".format(newFilename))
-
+	try:
+		os.remove("/tmp/{}.mp3".format(newFilename))
+	except FileNotFoundError as err:
+		print(err)
 #Creates .png whole spectrograms from mp3 files
 def createSpectrogramsFromAudio():
 	genresID = dict()
@@ -59,8 +64,20 @@ def createSpectrogramsFromAudio():
 
 	#Rename files according to genre
 	for index,filename in enumerate(files):
+		print(index, filename)
 		print("Creating spectrogram for file {}/{}...".format(index+1,nbFiles))
-		fileGenre = getGenre(rawDataPath+filename).decode('ASCII')
+		try:
+			fileGenre = getGenre(rawDataPath+filename).decode('ASCII')
+			check_idx = fileGenre.find('/')
+			if check_idx > 1:
+				fileGenre = fileGenre[0:check_idx]
+			fileGenre = fileGenre.strip()
+
+		except Exception as err:
+			print(err)
+			continue
+
+		print(fileGenre)
 		genresID[fileGenre] = genresID[fileGenre] + 1 if fileGenre in genresID else 1
 		fileID = genresID[fileGenre]
 		newFilename = fileGenre+"_"+str(fileID)

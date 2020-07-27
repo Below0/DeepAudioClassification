@@ -3,7 +3,6 @@ import random
 import string
 import os
 import sys
-import numpy as np
 
 from model import createModel
 from datasetTools import getDataset
@@ -18,7 +17,7 @@ from songToData import createSlicesFromAudio
 
 import argparse
 parser = argparse.ArgumentParser()
-parser.add_argument("mode", help="Trains or tests the CNN", nargs='+', choices=["train","test","slice"])
+parser.add_argument("mode", help="Trains or tests the CNN", nargs='+', choices=["train","test","slice","predict"])
 args = parser.parse_args()
 
 print("--------------------------")
@@ -71,6 +70,7 @@ if "test" in args.mode:
 
 	testAccuracy = model.evaluate(test_X, test_y)[0]
 	print("[+] Test accuracy: {} ".format(testAccuracy))
+
 
 
 
